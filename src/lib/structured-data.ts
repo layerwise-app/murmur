@@ -4,6 +4,7 @@ import { siteConfig } from '~/site.config';
 /** schema.org data for the company and the app, used on the home page. */
 export function organizationJsonLd() {
   const sameAs = siteConfig.social.map((item) => item.href).filter(Boolean);
+  const email = siteConfig.contactEmail.trim();
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -12,7 +13,7 @@ export function organizationJsonLd() {
     legalName: siteConfig.companyLegalName,
     url: siteUrl('/'),
     logo: siteUrl('/logo.png'),
-    email: siteConfig.contactEmail,
+    ...(email ? { email } : {}),
     numberOfEmployees: { '@type': 'QuantitativeValue', value: 12 },
     address: {
       '@type': 'PostalAddress',

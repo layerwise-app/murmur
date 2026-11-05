@@ -33,15 +33,22 @@ export const siteConfig = {
     { label: 'Terms', href: '/terms' }
   ],
 
-  /** Social profiles shown in the footer. Entries with an empty `href` are hidden. */
+  /**
+   * Social profiles shown in the footer. Each stays hidden until you give it
+   * a real `href`, like 'https://www.instagram.com/yourname'.
+   */
   social: [
     { label: 'Instagram', href: '' },
     { label: 'Bluesky', href: '' },
     { label: 'YouTube', href: '' }
   ],
 
-  /** Where people can write to the company, shown on Privacy and Terms. */
-  contactEmail: 'hello@lowtide.example',
+  /**
+   * Where people can write to you, like 'hello@yourcompany.com'. Leave empty
+   * until the address works: the footer link and the "write to us" sentences
+   * on Privacy and Terms stay hidden until it is set.
+   */
+  contactEmail: '' as string,
 
   /**
    * New waitlist sign-ups are emailed here (at most 100 a day). Leave empty

@@ -1,15 +1,31 @@
 import type { LegalPage as LegalPageContent } from '~/content/pages';
 import { siteConfig } from '~/site.config';
 
-function fill(text: string) {
-  return text.replaceAll('{contactEmail}', siteConfig.contactEmail);
+const CONTACT = '{contactEmail}';
+
+/**
+ * Sentences that mention {contactEmail} are only shown once siteConfig has a
+ * real address, so nobody is pointed at an inbox that doesn't exist.
+ */
+function withContact(block: string, email: string) {
+  if (!block.includes(CONTACT)) return block;
+  if (email) return block;
+  return block
+    .split(/(?<=[.!?])\s+/)
+    .filter((sentence) => !sentence.includes(CONTACT))
+    .join(' ');
 }
 
 /** Renders Privacy and Terms: paragraphs, "- " lists, and the contact email as a link. */
 function Body({ text }: { text: string }) {
+  const email = siteConfig.contactEmail.trim();
+  const blocks = text
+    .split('\n\n')
+    .map((block) => withContact(block, email))
+    .filter(Boolean);
   return (
     <>
-      {text.split('\n\n').map((block, index) => {
+      {blocks.map((block, index) => {
         const lines = block.split('\n');
         if (lines.every((line) => line.startsWith('- '))) {
           return (
@@ -23,15 +39,15 @@ function Body({ text }: { text: string }) {
             </ul>
           );
         }
-        const parts = fill(block).split(siteConfig.contactEmail);
+        const parts = block.split(CONTACT);
         return (
           <p key={index} className='mt-4 first:mt-0'>
             {parts.flatMap((part, i) =>
               i === 0
                 ? [part]
                 : [
-                    <a key={i} href={`mailto:${siteConfig.contactEmail}`} className='link text-ink'>
-                      {siteConfig.contactEmail}
+                    <a key={i} href={`mailto:${email}`} className='link text-ink'>
+                      {email}
                     </a>,
                     part
                   ]

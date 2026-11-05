@@ -32,7 +32,23 @@ All words live in a few files, so you never need to touch a component.
 
 Answers in `faq.ts` can link with `[words](/privacy)`. In `pages.ts`, a
 paragraph that starts with `- ` becomes a list, and `{contactEmail}` becomes
-the address from `site.config.ts`. Social links with an empty `href` are hidden.
+a link to the address from `site.config.ts`.
+
+### Contact and social links
+
+`contactEmail` and every `social` link in `src/site.config.ts` start empty, so
+the site never points visitors at an address or profile that doesn't exist.
+Each one stays hidden until you set it:
+
+- `contactEmail: 'hello@yourcompany.com'` adds the address to the footer, to
+  the company's structured data, and to the "write to us" sentences on Privacy
+  and Terms (any sentence with `{contactEmail}`, which is left out until then).
+- `{ label: 'Instagram', href: 'https://www.instagram.com/yourname' }` adds that
+  profile to the footer and to the structured data. Remove entries you don't
+  need.
+
+The sample addresses inside the drawn app screens are part of the drawings
+and are never links.
 
 If you change a sentence a voice reads (in `listening.ts`), run `pnpm voices`
 so the audio and captions match again (see [Voice samples](#voice-samples)).

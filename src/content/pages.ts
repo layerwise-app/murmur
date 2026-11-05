@@ -1,6 +1,8 @@
 // Copy for the Voices, Privacy, and Terms pages. Voices themselves live in
 // voices.ts. In legal text, a blank line starts a new paragraph and lines
-// starting with "- " become a list.
+// starting with "- " become a list. {contactEmail} becomes a link to
+// siteConfig.contactEmail; while that is empty, any sentence mentioning it is
+// left out.
 
 export const voicesPage = {
   seo: {
@@ -66,7 +68,7 @@ export const privacyPage: LegalPage = {
       body: 'This site sets no advertising or tracking cookies. Voice samples load only when you press play.\n\nIf you use Talk to the orb, your browser asks for the microphone. The sound is analysed inside your browser to move the orb for up to 30 seconds. It is never recorded, saved, or sent to us or anyone else.'
     },
     {
-      heading: 'Your rights and how to reach us',
+      heading: 'Your rights',
       body: 'Murmur is made by Lowtide Audio Ltd in Bristol, England. Under UK data protection law you can ask to see, correct, or delete what we hold about you, and you can complain to the Information Commissioner’s Office. Write to us at {contactEmail} and a person will reply.'
     }
   ]
@@ -112,7 +114,7 @@ export const termsPage: LegalPage = {
       body: 'You can delete your account at any time. We may suspend accounts that break these terms. If we change the terms in a way that matters, we will update the date above and tell you in the app before it takes effect.'
     },
     {
-      heading: 'Law and contact',
+      heading: 'The law',
       body: 'These terms are governed by the law of England and Wales. Questions are welcome at {contactEmail}.'
     }
   ]

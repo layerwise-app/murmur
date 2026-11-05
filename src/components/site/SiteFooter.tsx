@@ -4,6 +4,7 @@ import { SmartLink } from './SmartLink';
 
 export function SiteFooter() {
   const social = siteConfig.social.filter((item) => item.href);
+  const contactEmail = siteConfig.contactEmail.trim();
   const year = 2026;
   return (
     <footer className='px-3 pb-3 sm:px-4 sm:pb-4'>
@@ -51,14 +52,16 @@ export function SiteFooter() {
                     </SmartLink>
                   </li>
                 ))}
-              <li>
-                <a
-                  href={`mailto:${siteConfig.contactEmail}`}
-                  className='inline-flex min-h-11 items-center text-ink-soft transition-colors hover:text-ink'
-                >
-                  {siteConfig.contactEmail}
-                </a>
-              </li>
+              {contactEmail ? (
+                <li>
+                  <a
+                    href={`mailto:${contactEmail}`}
+                    className='inline-flex min-h-11 items-center text-ink-soft transition-colors hover:text-ink'
+                  >
+                    {contactEmail}
+                  </a>
+                </li>
+              ) : null}
               {social.map((item) => (
                 <li key={item.label}>
                   <SmartLink
