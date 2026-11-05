@@ -1,8 +1,7 @@
-import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
+import { sqliteTable, text, integer, index } from 'drizzle-orm/sqlite-core';
 
-// Better Auth tables. After adding an auth plugin, run
-// `pnpm run auth:generate --yes`, copy only its new tables and columns from the
-// generated `auth-schema.ts` into this section, then delete that file.
+// Starter authentication tables. This site has no accounts, so nothing reads
+// or writes them; they stay so the existing migrations remain intact.
 
 export const user = sqliteTable('user', {
   id: text('id').primaryKey(),
@@ -73,15 +72,46 @@ export const verification = sqliteTable('verification', {
   )
 });
 
-// Define your own tables below, then run `pnpm run db:generate` to create a
-// migration. Migrations are applied to the production D1 database on publish.
-//
-// Example:
-//
-// export const posts = sqliteTable('posts', {
-//   id: integer('id').primaryKey({ autoIncrement: true }),
-//   title: text('title').notNull(),
-//   createdAt: integer('created_at', { mode: 'timestamp' })
-//     .notNull()
-//     .$defaultFn(() => new Date()),
-// });
+// Waitlist sign-ups from the home page form. View them in the project's
+// Database panel in Layerwise.
+export const waitlistSignups = sqliteTable(
+  'waitlist_signups',
+  {
+    id: text('id')
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    email: text('email').notNull().unique(),
+    platform: text('platform', { enum: ['iphone', 'android', 'web'] }).notNull(),
+    listensTo: text('listens_to', {
+      enum: ['articles', 'newsletters', 'pdfs', 'email']
+    }).notNull(),
+    ownerNotified: integer('owner_notified', { mode: 'boolean' })
+      .notNull()
+      .default(false),
+    createdAt: integer('created_at', { mode: 'timestamp' })
+      .notNull()
+      .$defaultFn(() => new Date())
+  },
+  (table) => [index('waitlist_signups_created_at_idx').on(table.createdAt)]
+);
+
+// One row per form submission, for the rate limit. `visitor` is a salted
+// SHA-256 hash of the IP address; raw addresses are never stored. Rows older
+// than a day are deleted as new ones arrive.
+export const waitlistAttempts = sqliteTable(
+  'waitlist_attempts',
+  {
+    id: integer('id').primaryKey({ autoIncrement: true }),
+    visitor: text('visitor').notNull(),
+    createdAt: integer('created_at', { mode: 'timestamp_ms' }).notNull()
+  },
+  (table) => [
+    index('waitlist_attempts_visitor_idx').on(table.visitor, table.createdAt)
+  ]
+);
+
+// Secrets the site creates for itself, like the salt for visitor hashes.
+export const siteSecrets = sqliteTable('site_secrets', {
+  name: text('name').primaryKey(),
+  value: text('value').notNull()
+});

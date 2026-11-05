@@ -1,0 +1,36 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "typescript",
+    "react",
+    "jsx-a11y",
+    "unicorn",
+    "oxc",
+    "import"
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "jsx-a11y/alt-text": "error",
+    "jsx-a11y/anchor-is-valid": "error",
+    "jsx-a11y/label-has-associated-control": "error",
+    "jsx-a11y/no-autofocus": "error",
+    "import/no-unassigned-import": "off",
+    "unicorn/no-array-sort": "off",
+    "no-underscore-dangle": "off"
+  },
+  "ignorePatterns": [
+    "src/components/ui/**",
+    "src/hooks/**",
+    "src/routeTree.gen.ts",
+    "worker-configuration.d.ts",
+    "drizzle/**",
+    ".output/**",
+    "dist/**"
+  ]
+}

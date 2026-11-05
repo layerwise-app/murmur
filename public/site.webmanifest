@@ -1,6 +1,7 @@
 {
-  "name": "",
-  "short_name": "",
+  "name": "Murmur",
+  "short_name": "Murmur",
+  "description": "Everything you saved, read to you.",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -13,7 +14,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#f8f2e9",
+  "background_color": "#f8f2e9",
   "display": "standalone"
 }

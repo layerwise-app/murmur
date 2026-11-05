@@ -1,19 +1,19 @@
 import { createIsomorphicFn } from '@tanstack/react-start';
 import { getRequestUrl } from '@tanstack/react-start/server';
+import { siteConfig } from '~/site.config';
 
 type Site = {
   name: string;
   description: string;
   /**
-   * The address search engines should index, like `https://bloombakery.com`.
+   * The address search engines should index, like `https://murmur.app`.
    * Empty uses the address each visitor opened. Set it when a custom domain is
    * connected, so the layerwise.site address isn't indexed as a copy.
    */
   url: string;
   /**
-   * Share image for link previews on Instagram, iMessage, WhatsApp, and
-   * search: a 1200×630 PNG or JPG in `public/`, like `/og-image.jpg`. Pages
-   * can set their own. Empty shows previews without an image.
+   * Default share image for link previews: a 1200×630 PNG in `public/`.
+   * Each page also passes its own from `public/og/`.
    */
   image: string;
   imageAlt: string;
@@ -23,16 +23,16 @@ type Site = {
 
 /** What search engines and link previews read about this site. */
 export const site: Site = {
-  name: 'My App',
-  description: 'Built with Layerwise',
+  name: siteConfig.product,
+  description: siteConfig.description,
   url: '',
-  image: '',
-  imageAlt: '',
+  image: '/og/home.png',
+  imageAlt: `${siteConfig.product}: ${siteConfig.tagline}`,
   googleSiteVerification: ''
 };
 
 /** Public pages in `/sitemap.xml`. Add every page search engines should find. */
-export const sitemapPaths: string[] = ['/'];
+export const sitemapPaths: string[] = ['/', '/voices', '/privacy', '/terms'];
 
 const requestOrigin = createIsomorphicFn()
   .server(() => getRequestUrl().origin)

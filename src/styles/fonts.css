@@ -1,0 +1,30 @@
+/*
+ * Self-hosted, open-license fonts (SIL Open Font License 1.1), bundled from
+ * Fontsource packages at build time:
+ *   Fraunces (display): @fontsource-variable/fraunces, with its SOFT axis
+ *   Figtree (copy):     @fontsource-variable/figtree
+ * To change a font, install another @fontsource-variable package, import it
+ * here, update `fonts` in src/site.config.ts, and adjust the fallback metrics
+ * below so text doesn't shift while the font loads (see README).
+ */
+@import '@fontsource-variable/fraunces/full.css';
+@import '@fontsource-variable/figtree/wght.css';
+
+/* Local fonts sized to match, shown until the web fonts arrive. */
+@font-face {
+  font-family: 'Fraunces Fallback';
+  src: local('Georgia'), local('Times New Roman');
+  size-adjust: 95.9%;
+  ascent-override: 102.2%;
+  descent-override: 27.1%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Figtree Fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('Roboto');
+  size-adjust: 99.2%;
+  ascent-override: 95.8%;
+  descent-override: 25.2%;
+  line-gap-override: 0%;
+}

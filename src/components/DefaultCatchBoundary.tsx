@@ -1,53 +1,23 @@
-import {
-  ErrorComponent,
-  Link,
-  rootRouteId,
-  useMatch,
-  useRouter,
-} from '@tanstack/react-router'
-import type { ErrorComponentProps } from '@tanstack/react-router'
+import { Link, useRouter } from '@tanstack/react-router';
+import type { ErrorComponentProps } from '@tanstack/react-router';
 
 export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
-  const router = useRouter()
-  const isRoot = useMatch({
-    strict: false,
-    select: (state) => state.id === rootRouteId,
-  })
-
-  console.error(error)
+  const router = useRouter();
+  console.error(error);
 
   return (
-    <div className="min-w-0 flex-1 p-4 flex flex-col items-center justify-center gap-6">
-      <ErrorComponent error={error} />
-      <div className="flex gap-2 items-center flex-wrap">
-        <button
-          onClick={() => {
-            router.invalidate()
-          }}
-          className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded-sm text-white uppercase font-extrabold`}
-        >
-          Try Again
+    <section className='mx-auto flex max-w-2xl flex-col items-center px-5 py-28 text-center'>
+      <p className='eyebrow'>Something went wrong</p>
+      <h1 className='display-lg mt-5'>This page didn’t load.</h1>
+      <p className='lede mt-5'>Try again in a moment. If it keeps happening, go back to the home page.</p>
+      <div className='mt-8 flex flex-wrap justify-center gap-3'>
+        <button type='button' onClick={() => router.invalidate()} className='btn btn-primary'>
+          Try again
         </button>
-        {isRoot ? (
-          <Link
-            to="/"
-            className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded-sm text-white uppercase font-extrabold`}
-          >
-            Home
-          </Link>
-        ) : (
-          <Link
-            to="/"
-            className={`px-2 py-1 bg-gray-600 dark:bg-gray-700 rounded-sm text-white uppercase font-extrabold`}
-            onClick={(e) => {
-              e.preventDefault()
-              window.history.back()
-            }}
-          >
-            Go Back
-          </Link>
-        )}
+        <Link to='/' className='btn btn-quiet'>
+          Home
+        </Link>
       </div>
-    </div>
-  )
+    </section>
+  );
 }
